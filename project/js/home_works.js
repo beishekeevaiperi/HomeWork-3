@@ -1,3 +1,4 @@
+// №1
 const gmailInput = document.getElementById('gmail_input'),
     gmailBtn = document.getElementById('gmail_button'),
     gmailResult = document.getElementById('gmail_result')
@@ -41,3 +42,63 @@ const moveBlock = () => {
 }
 
 moveBlock()
+
+// №2
+let minutes = document.getElementById('minutes');
+let seconds = document.getElementById('seconds');
+let mlSeconds = document.getElementById('ml-seconds');
+const startBtn = document.getElementById('start');
+const stopBtn = document.getElementById('stop');
+const resetBtn = document.getElementById('reset');
+const resumeBtn = document.getElementById('resume');
+
+let minuteS = 0, secondS = 0, mlSecondS = 0;
+let timerId = null; 
+
+function updateTimer() {
+    mlSecondS++;
+    if (mlSecondS > 99) { 
+        mlSecondS = 0;
+        secondS++;
+        if (secondS > 59) { 
+            secondS = 0;
+            minuteS++;
+            if (minuteS > 59) { 
+                minuteS = 0;
+            }
+            minutes.innerHTML = minuteS.toString().padStart(2, "0");
+        }
+        seconds.innerHTML = secondS.toString().padStart(2, "0");
+    }
+    mlSeconds.innerHTML = mlSecondS.toString().padStart(2, "0");
+}
+
+
+startBtn.onclick = function() {
+    if (timerId === null) { 
+        timerId = setInterval(updateTimer, 10);
+    }
+};
+
+stopBtn.onclick = function() {
+    clearInterval(timerId);
+    timerId = null; 
+};
+
+
+resetBtn.onclick = function() {
+    clearInterval(timerId);
+    timerId = null;
+    minuteS = 0;
+    secondS = 0;
+    mlSecondS = 0;
+    minutes.innerHTML = "00";
+    seconds.innerHTML = "00";
+    mlSeconds.innerHTML = "00";
+};
+
+resumeBtn.onclick = function() {
+    if (timerId === null) { 
+        timerId = setInterval(updateTimer, 10);
+    }
+};
